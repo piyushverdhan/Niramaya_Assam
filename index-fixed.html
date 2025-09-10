@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMRIT CHO Performance Dashboard - Darrang District (8 Coordinators)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>AMRIT CHO Performance Analytics Dashboard</h1>
+                <p>Darrang District, Assam - 8 Block Coordinators Across 4 Blocks - Healthcare Management System</p>
+                
+                <!-- Color Temperature Toggle -->
+                <button id="color-temp-toggle" class="color-temp-toggle" onclick="toggleColorTheme()">
+                    <span class="toggle-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('overview')" data-tab="overview">
+                <span class="tab-icon">📊</span> Overview
+            </button>
+            <button class="tab-btn" onclick="switchTab('block-analysis')" data-tab="block-analysis">
+                <span class="tab-icon">🏢</span> Block Analysis
+            </button>
+            <button class="tab-btn" onclick="switchTab('cho-directory')" data-tab="cho-directory">
+                <span class="tab-icon">👥</span> CHO Directory
+            </button>
+            <button class="tab-btn" onclick="switchTab('interactive-map')" data-tab="interactive-map">
+                <span class="tab-icon">🗺️</span> Interactive Map
+            </button>
+            <button class="tab-btn" onclick="switchTab('performance-monitor')" data-tab="performance-monitor">
+                <span class="tab-icon">📈</span> Performance Monitor
+            </button>
+            <button class="tab-btn" onclick="switchTab('alerts')" data-tab="alerts">
+                <span class="tab-icon glowing">⚠️</span> Alerts & Notifications
+            </button>
+            <button id="active-stats-btn" class="active-stats-btn glowing" onclick="openActiveStatsModal()">
+                Active Statistics
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Overview Tab -->
+            <section class="tab-panel active" id="overview">
+                <!-- Assam Map Background -->
+                <div class="assam-background">
+                    <svg class="assam-outline" viewBox="0 0 400 300">
+                        <path d="M50,50 Q100,30 150,50 T250,70 Q320,80 350,120 L340,180 Q300,220 250,230 T150,220 Q80,200 50,150 Z" 
+                              fill="#f0f0f0" stroke="#ddd" stroke-width="2" opacity="0.3"/>
+                        <!-- Darrang District Highlight -->
+                        <circle cx="180" cy="120" r="15" fill="#3b82f6" stroke="#1e40af" 
+                                stroke-width="2" opacity="0.6"/>
+                        <text x="200" y="125" font-size="10" fill="#1e40af" font-weight="bold">Darrang</text>
+                    </svg>
+                </div>
+
+                <!-- Key Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-content">
+                            <h3>Total CHOs</h3>
+                            <div class="metric-value">101</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🏢</div>
+                        <div class="metric-content">
+                            <h3>Total Blocks</h3>
+                            <div class="metric-value">4</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🏥</div>
+                        <div class="metric-content">
+                            <h3>Total Facilities</h3>
+                            <div class="metric-value">100</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">👨‍💼</div>
+                        <div class="metric-content">
+                            <h3>Block Coordinators</h3>
+                            <div class="metric-value">8</div>
+                            <div class="metric-subtitle">2 per block</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-content">
+                            <h3>Activity Rate</h3>
+                            <div class="metric-value">48.5%</div>
+                            <div class="metric-subtitle">Current Week</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🏥</div>
+                        <div class="metric-content">
+                            <h3>Total OPD</h3>
+                            <div class="metric-value">1,556</div>
+                            <div class="metric-subtitle">All Periods</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive District Map -->
+                <div class="district-map-section">
+                    <h2>Interactive Darrang District Map</h2>
+                    <div class="map-container">
+                        <svg class="district-map" viewBox="0 0 600 400">
+                            <!-- KHARUPETIA Block - Light Green -->
+                            <path id="kharupetia-block" class="block-area" 
+                                  d="M100,100 L200,80 L250,120 L200,160 L100,140 Z"
+                                  fill="#a7f3d0" stroke="#22c55e" stroke-width="2"
+                                  data-block="KHARUPETIA" onclick="filterByBlock('KHARUPETIA')">
+                            </path>
+                            <text x="150" y="125" text-anchor="middle" class="block-label">KHARUPETIA</text>
+                            <text x="150" y="140" text-anchor="middle" class="coordinator-label">M.ISLAM + A.IFTIKAR</text>
+
+                            <!-- PATHARIGHAT Block - Light Red -->
+                            <path id="patharighat-block" class="block-area" 
+                                  d="M250,120 L350,100 L400,140 L350,180 L250,160 Z"
+                                  fill="#fecaca" stroke="#dc2626" stroke-width="2"
+                                  data-block="PATHARIGHAT" onclick="filterByBlock('PATHARIGHAT')">
+                            </path>
+                            <text x="325" y="135" text-anchor="middle" class="block-label">PATHARIGHAT</text>
+                            <text x="325" y="150" text-anchor="middle" class="coordinator-label">P.RAJBONGSHI + N.SAHARIAH</text>
+
+                            <!-- Sipajhar Block - Light Orange -->
+                            <path id="sipajhar-block" class="block-area" 
+                                  d="M100,160 L200,180 L250,220 L150,240 L100,200 Z"
+                                  fill="#fed7aa" stroke="#f97316" stroke-width="2"
+                                  data-block="Sipajhar" onclick="filterByBlock('Sipajhar')">
+                            </path>
+                            <text x="175" y="205" text-anchor="middle" class="block-label">Sipajhar</text>
+                            <text x="175" y="220" text-anchor="middle" class="coordinator-label">B.MEDHI + M.SALOI</text>
+
+                            <!-- JALJALI Block - Light Yellow -->
+                            <path id="jaljali-block" class="block-area" 
+                                  d="M250,180 L350,200 L400,240 L300,260 L250,220 Z"
+                                  fill="#fef3c7" stroke="#eab308" stroke-width="2"
+                                  data-block="JALJALI" onclick="filterByBlock('JALJALI')">
+                            </path>
+                            <text x="325" y="225" text-anchor="middle" class="block-label">JALJALI</text>
+                            <text x="325" y="240" text-anchor="middle" class="coordinator-label">S.BARUAH + P.DAS</text>
+                        </svg>
+                    </div>
+                    
+                    <!-- Map Legend -->
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #a7f3d0;"></span>
+                            <span>High Performance (>70%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #fef3c7;"></span>
+                            <span>Medium Performance (50-70%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #fed7aa;"></span>
+                            <span>Low Performance (30-50%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #fecaca;"></span>
+                            <span>Critical Performance (<30%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8 Coordinators Summary -->
+                <div class="coordinators-summary">
+                    <h2>8 Block Coordinators Performance Summary</h2>
+                    <div class="coordinators-grid">
+                        <!-- Top Performers -->
+                        <div class="coordinator-card excellent">
+                            <h4>MUNINDRA SALOI</h4>
+                            <p>Sipajhar Block • 11 CHOs</p>
+                            <div class="performance-score">79.4%</div>
+                            <div class="performance-label">🏆 TOP PERFORMER</div>
+                        </div>
+                        <div class="coordinator-card excellent">
+                            <h4>PRIYANKA DAS</h4>
+                            <p>JALJALI Block • 10 CHOs</p>
+                            <div class="performance-score">76.6%</div>
+                            <div class="performance-label">Excellent</div>
+                        </div>
+                        <div class="coordinator-card excellent">
+                            <h4>MOHIBUL ISLAM</h4>
+                            <p>KHARUPETIA Block • 20 CHOs</p>
+                            <div class="performance-score">75.6%</div>
+                            <div class="performance-label">Excellent</div>
+                        </div>
+                        <div class="coordinator-card excellent">
+                            <h4>ABU KHAYER IFTIKAR</h4>
+                            <p>KHARUPETIA Block • 14 CHOs</p>
+                            <div class="performance-score">73.8%</div>
+                            <div class="performance-label">Excellent</div>
+                        </div>
+                        
+                        <!-- Medium Performers -->
+                        <div class="coordinator-card good">
+                            <h4>NIRANJAN SAHARIAH</h4>
+                            <p>PATHARIGHAT Block • 6 CHOs</p>
+                            <div class="performance-score">59.7%</div>
+                            <div class="performance-label">Good</div>
+                        </div>
+                        
+                        <!-- Need Improvement -->
+                        <div class="coordinator-card needs-improvement">
+                            <h4>SAGARIKA PRITY BARUAH</h4>
+                            <p>JALJALI Block • 13 CHOs</p>
+                            <div class="performance-score">34.2%</div>
+                            <div class="performance-label">Needs Improvement</div>
+                        </div>
+                        <div class="coordinator-card needs-improvement">
+                            <h4>BALODEV MEDHI</h4>
+                            <p>Sipajhar Block • 15 CHOs</p>
+                            <div class="performance-score">24.2%</div>
+                            <div class="performance-label">Needs Improvement</div>
+                        </div>
+                        
+                        <!-- Critical -->
+                        <div class="coordinator-card critical">
+                            <h4>PRATAP RAJBONGSHI</h4>
+                            <p>PATHARIGHAT Block • 11 CHOs</p>
+                            <div class="performance-score">17.9%</div>
+                            <div class="performance-label">⚠️ CRITICAL</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Trends Chart -->
+                <div class="trends-section">
+                    <h2>Weekly Performance Trends</h2>
+                    <div class="chart-container">
+                        <canvas id="weeklyTrendsChart" width="800" height="400"></canvas>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+
+            <!-- Block Analysis Tab -->
+            <section class="tab-panel" id="block-analysis">
+                <div class="analysis-header">
+                    <h2>Block Analysis - 8 Coordinators Across 4 Blocks</h2>
+                    <div class="filter-controls">
+                        <select id="blockFilter" onchange="handleBlockFilter(this)">
+                            <option value="all">All Blocks</option>
+                            <option value="KHARUPETIA">KHARUPETIA (2 coordinators)</option>
+                            <option value="PATHARIGHAT">PATHARIGHAT (2 coordinators)</option>
+                            <option value="Sipajhar">Sipajhar (2 coordinators)</option>
+                            <option value="JALJALI">JALJALI (2 coordinators)</option>
+                        </select>
+                        <select id="weekFilter" onchange="handleWeekFilter(this)">
+                            <option value="all">All Periods</option>
+                            <option value="baseline">Beginning to Aug 18</option>
+                            <option value="week1">Week 1 (Aug 14-20)</option>
+                            <option value="week2">Week 2 (Aug 21-27)</option>
+                            <option value="week3">Week 3 (Aug 28-Sep 4)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Block Comparison Table -->
+                <div class="comparison-table">
+                    <h3>Block Performance Comparison</h3>
+                    <table id="blockComparisonTable">
+                        <thead>
+                            <tr>
+                                <th>Block</th>
+                                <th>Coordinator 1</th>
+                                <th>Coordinator 2</th>
+                                <th>Total CHOs</th>
+                                <th>Activity Rate</th>
+                                <th>Total OPD</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="showBlockDetails('KHARUPETIA')">
+                                <td><strong>KHARUPETIA</strong></td>
+                                <td>MOHIBUL ISLAM</td>
+                                <td>ABU KHAYER IFTIKAR</td>
+                                <td>34</td>
+                                <td><span class="performance-badge excellent">76.5%</span></td>
+                                <td>113</td>
+                                <td><span class="performance-level high">HIGH</span></td>
+                            </tr>
+                            <tr onclick="showBlockDetails('JALJALI')">
+                                <td><strong>JALJALI</strong></td>
+                                <td>SAGARIKA PRITY BARUAH</td>
+                                <td>PRIYANKA DAS</td>
+                                <td>23</td>
+                                <td><span class="performance-badge good">39.1%</span></td>
+                                <td>55</td>
+                                <td><span class="performance-level medium">MEDIUM</span></td>
+                            </tr>
+                            <tr onclick="showBlockDetails('Sipajhar')">
+                                <td><strong>Sipajhar</strong></td>
+                                <td>BALODEV MEDHI</td>
+                                <td>MUNINDRA SALOI</td>
+                                <td>26</td>
+                                <td><span class="performance-badge needs-improvement">38.5%</span></td>
+                                <td>42</td>
+                                <td><span class="performance-level low">LOW</span></td>
+                            </tr>
+                            <tr onclick="showBlockDetails('PATHARIGHAT')">
+                                <td><strong>PATHARIGHAT</strong></td>
+                                <td>PRATAP RAJBONGSHI</td>
+                                <td>NIRANJAN SAHARIAH</td>
+                                <td>17</td>
+                                <td><span class="performance-badge critical">23.5%</span></td>
+                                <td>12</td>
+                                <td><span class="performance-level critical">CRITICAL</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Coordinator Details Panel -->
+                <div id="coordinatorDetails" class="coordinator-details">
+                    <h3>Coordinator Details</h3>
+                    <div id="coordinatorInfo">
+                        Click on a block above to view coordinator details
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+
+            <!-- CHO Directory Tab -->
+            <section class="tab-panel" id="cho-directory">
+                <div class="directory-header">
+                    <h2>CHO Directory - 101 CHOs Under 8 Coordinators</h2>
+                    <div class="directory-controls">
+                        <input type="text" id="choSearch" placeholder="Search CHOs..." oninput="handleCHOSearch(this)">
+                        <select id="coordinatorFilter" onchange="handleCoordinatorFilter(this)">
+                            <option value="all">All Coordinators</option>
+                            <option value="MOHIBUL ISLAM">MOHIBUL ISLAM (KHARUPETIA)</option>
+                            <option value="ABU KHAYER IFTIKAR">ABU KHAYER IFTIKAR (KHARUPETIA)</option>
+                            <option value="PRATAP RAJBONGSHI">PRATAP RAJBONGSHI (PATHARIGHAT)</option>
+                            <option value="NIRANJAN SAHARIAH">NIRANJAN SAHARIAH (PATHARIGHAT)</option>
+                            <option value="BALODEV MEDHI">BALODEV MEDHI (Sipajhar)</option>
+                            <option value="MUNINDRA SALOI">MUNINDRA SALOI (Sipajhar)</option>
+                            <option value="SAGARIKA PRITY BARUAH">SAGARIKA PRITY BARUAH (JALJALI)</option>
+                            <option value="PRIYANKA DAS">PRIYANKA DAS (JALJALI)</option>
+                        </select>
+                        <select id="activityStatusFilter" onchange="handleStatusFilter(this)">
+                            <option value="all">All Status</option>
+                            <option value="Yes">Active</option>
+                            <option value="No">Inactive</option>
+                        </select>
+                        <button id="exportCsv" onclick="exportToCsv()">Export CSV</button>
+                    </div>
+                </div>
+
+                <!-- Enhanced Download Section -->
+                <div class="download-section comprehensive">
+                    <h3>📥 Download AMRIT Data & Reports</h3>
+                    <div class="download-categories">
+                        <!-- Original Excel Files -->
+                        <div class="download-category">
+                            <h4>📊 Original Excel Reports</h4>
+                            <div class="download-grid">
+                                <a href="data/excel-files/AMRIT-data-18-August-2025.xlsx" 
+                                   download class="download-btn excel baseline">
+                                    📈 Baseline Period (Aug 18)
+                                </a>
+                                <a href="data/excel-files/AMRIT-data-14-to-20-August-2025.xlsx" 
+                                   download class="download-btn excel week1">
+                                    📊 Week 1 (Aug 14-20)
+                                </a>
+                                <a href="data/excel-files/AMRIT-data-21-to-27-August-2025.xlsx" 
+                                   download class="download-btn excel week2">
+                                    📊 Week 2 (Aug 21-27)
+                                </a>
+                                <a href="data/excel-files/AMRIT-data-28-August-to-04-September-2025.xlsx" 
+                                   download class="download-btn excel week3">
+                                    📊 Week 3 (Aug 28-Sep 4)
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Processed Analytics Data -->
+                        <div class="download-category">
+                            <h4>📋 Analytics & Performance Data</h4>
+                            <div class="download-grid">
+                                <a href="data/processed/detailed_8_coordinator_performance.csv" 
+                                   download class="download-btn csv coordinator">
+                                    👥 8 Coordinator Performance
+                                </a>
+                                <a href="data/processed/comprehensive_8_coordinator_block_analysis.csv" 
+                                   download class="download-btn csv block">
+                                    🏢 Block Analysis (4 Blocks)
+                                </a>
+                                <a href="data/processed/coordinator_intervention_plan.csv" 
+                                   download class="download-btn csv intervention">
+                                    ⚠️ Intervention Action Plan
+                                </a>
+                                <a href="data/processed/block_performance_comparison.csv" 
+                                   download class="download-btn csv comparison">
+                                    📊 Block Comparison Matrix
+                                </a>
+                                <a href="data/dashboard_corrected_8_coordinators.json" 
+                                   download class="download-btn json config">
+                                    ⚙️ Dashboard Configuration
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHO Table -->
+                <div class="cho-table-container">
+                    <table id="choTable">
+                        <thead>
+                            <tr>
+                                <th>CHO Name</th>
+                                <th>Block</th>
+                                <th>Coordinator</th>
+                                <th>Facility</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sample data -->
+                            <tr class="cho-inactive" title="Click to send mobile notification">
+                                <td><strong>Pranjali Borah</strong></td>
+                                <td>KHARUPETIA</td>
+                                <td>MOHIBUL ISLAM</td>
+                                <td>Baruapara AAM</td>
+                                <td>9876543210<br><small>pranjali@health.gov.in</small></td>
+                                <td><span class="status-badge inactive">Inactive</span></td>
+                                <td><button class="action-btn small" onclick="sendNotification('Pranjali Borah')">Send Notification</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sabrina Sahin</strong></td>
+                                <td>KHARUPETIA</td>
+                                <td>ABU KHAYER IFTIKAR</td>
+                                <td>Bhakatpara AAM</td>
+                                <td>9876543212<br><small>sabrina@health.gov.in</small></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td><span class="text-muted">-</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+
+            <!-- Interactive Map Tab -->
+            <section class="tab-panel" id="interactive-map">
+                <!-- Assam Map Background -->
+                <div class="assam-background full-screen">
+                    <svg class="assam-outline large" viewBox="0 0 800 600">
+                        <path d="M100,100 Q200,60 300,100 T500,140 Q640,160 700,240 L680,360 Q600,440 500,460 T300,440 Q160,400 100,300 Z" 
+                              fill="#f0f0f0" stroke="#ddd" stroke-width="3" opacity="0.3"/>
+                        <circle cx="360" cy="240" r="25" fill="#3b82f6" stroke="#1e40af" 
+                                stroke-width="3" opacity="0.6"/>
+                        <text x="400" y="250" font-size="16" fill="#1e40af" font-weight="bold">Darrang District</text>
+                    </svg>
+                </div>
+
+                <div class="map-header">
+                    <h2>Interactive Map - Darrang District with 8 Coordinators</h2>
+                    <div class="map-controls">
+                        <div class="data-layers">
+                            <button class="layer-btn active" onclick="switchLayer('activity')" data-layer="activity">Activity Rate</button>
+                            <button class="layer-btn" onclick="switchLayer('opd')" data-layer="opd">OPD Count</button>
+                            <button class="layer-btn" onclick="switchLayer('abha')" data-layer="abha">ABHA Registration</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-map-container">
+                    <svg class="interactive-district-map" viewBox="0 0 800 600">
+                        <!-- Enhanced interactive blocks -->
+                        <path class="block-area interactive" 
+                              d="M150,150 L300,120 L375,180 L300,240 L150,210 Z"
+                              fill="#a7f3d0" stroke="#22c55e" stroke-width="3"
+                              data-block="KHARUPETIA" onclick="showBlockPopup('KHARUPETIA')">
+                        </path>
+                        <text x="225" y="185" text-anchor="middle" class="block-label large">KHARUPETIA</text>
+                        
+                        <path class="block-area interactive" 
+                              d="M375,180 L525,150 L600,210 L525,270 L375,240 Z"
+                              fill="#fecaca" stroke="#dc2626" stroke-width="3"
+                              data-block="PATHARIGHAT" onclick="showBlockPopup('PATHARIGHAT')">
+                        </path>
+                        <text x="487" y="215" text-anchor="middle" class="block-label large">PATHARIGHAT</text>
+                        
+                        <path class="block-area interactive" 
+                              d="M150,240 L300,270 L375,330 L225,360 L150,300 Z"
+                              fill="#fed7aa" stroke="#f97316" stroke-width="3"
+                              data-block="Sipajhar" onclick="showBlockPopup('Sipajhar')">
+                        </path>
+                        <text x="262" y="315" text-anchor="middle" class="block-label large">Sipajhar</text>
+                        
+                        <path class="block-area interactive" 
+                              d="M375,270 L525,300 L600,360 L450,390 L375,330 Z"
+                              fill="#fef3c7" stroke="#eab308" stroke-width="3"
+                              data-block="JALJALI" onclick="showBlockPopup('JALJALI')">
+                        </path>
+                        <text x="487" y="345" text-anchor="middle" class="block-label large">JALJALI</text>
+                    </svg>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+
+            <!-- Performance Monitor Tab -->
+            <section class="tab-panel" id="performance-monitor">
+                <div class="monitor-header">
+                    <h2>Performance Monitor - 8 Coordinators Real-time Analytics</h2>
+                    <div class="period-selector">
+                        <select id="monitorPeriod" onchange="handlePeriodFilter(this)">
+                            <option value="all">All Periods</option>
+                            <option value="baseline">Beginning to Aug 18</option>
+                            <option value="week1">Week 1 (Aug 14-20)</option>
+                            <option value="week2">Week 2 (Aug 21-27)</option>
+                            <option value="week3">Week 3 (Aug 28-Sep 4)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Live KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <h3>Top Coordinator</h3>
+                        <div class="kpi-value">MUNINDRA SALOI</div>
+                        <div class="kpi-detail">79.4% Activity Rate</div>
+                    </div>
+                    <div class="kpi-card critical">
+                        <h3>Critical Alert</h3>
+                        <div class="kpi-value">PRATAP RAJBONGSHI</div>
+                        <div class="kpi-detail">17.9% Activity Rate</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Performance Gap</h3>
+                        <div class="kpi-value">61.5%</div>
+                        <div class="kpi-detail">Between Top & Bottom</div>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Best Block</h3>
+                        <div class="kpi-value">KHARUPETIA</div>
+                        <div class="kpi-detail">75.0% Avg Activity</div>
+                    </div>
+                </div>
+
+                <!-- Performance Ranking -->
+                <div class="performance-ranking">
+                    <h3>8-Coordinator Performance Ranking</h3>
+                    <div class="ranking-list" id="coordinatorRanking">
+                        <div class="ranking-item">
+                            <div class="ranking-position">1</div>
+                            <div class="ranking-info">
+                                <div class="ranking-name">MUNINDRA SALOI</div>
+                                <div class="ranking-details">Sipajhar Block • 11 CHOs</div>
+                            </div>
+                            <div class="ranking-score excellent">79.4%</div>
+                        </div>
+                        <div class="ranking-item">
+                            <div class="ranking-position">2</div>
+                            <div class="ranking-info">
+                                <div class="ranking-name">PRIYANKA DAS</div>
+                                <div class="ranking-details">JALJALI Block • 10 CHOs</div>
+                            </div>
+                            <div class="ranking-score excellent">76.6%</div>
+                        </div>
+                        <!-- Add more ranking items -->
+                    </div>
+                </div>
+
+                <!-- Performance Charts -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Geographic Performance Heatmap</h3>
+                        <canvas id="performanceHeatmap" width="400" height="300"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Infrastructure Readiness</h3>
+                        <canvas id="infrastructureChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Calculation Methods Section -->
+                <div class="calculation-methods">
+                    <h3>📊 Calculation Methods</h3>
+                    <div class="method-explanations">
+                        <div class="method-item">
+                            <h4>Activity Rate Calculation:</h4>
+                            <p><strong>Activity Rate = (Active CHOs ÷ Total CHOs) × 100</strong></p>
+                            <p>Active CHOs are those with 'Yes' status in the current period.</p>
+                        </div>
+                        <div class="method-item">
+                            <h4>Performance Ranking Calculation:</h4>
+                            <p><strong>Performance Ranking = Weighted score based on:</strong></p>
+                            <ul>
+                                <li>Activity Rate (40%)</li>
+                                <li>OPD Registrations (30%)</li>
+                                <li>ABHA Registrations (20%)</li>
+                                <li>Consistency across periods (10%)</li>
+                            </ul>
+                        </div>
+                        <div class="method-item">
+                            <h4>Infrastructure Readiness Calculation:</h4>
+                            <p><strong>Infrastructure Readiness = Average of:</strong></p>
+                            <ul>
+                                <li>CHO availability score</li>
+                                <li>Facility functionality score</li>
+                                <li>Coordinator supervision effectiveness score</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+
+            <!-- Alerts & Notifications Tab -->
+            <section class="tab-panel" id="alerts">
+                <div class="alerts-header">
+                    <h2>⚠️ Alerts & Notifications - 8 Coordinators Monitoring</h2>
+                </div>
+
+                <div class="alerts-grid">
+                    <!-- Critical Alerts -->
+                    <div class="alert-card critical">
+                        <div class="alert-icon">🚨</div>
+                        <div class="alert-content">
+                            <h3>PRATAP RAJBONGSHI - Critical Performance</h3>
+                            <p><strong>17.9%</strong> average activity rate across all periods - Lowest among 8 coordinators</p>
+                            <p><strong>Action Required:</strong> Immediate supervision and training intervention</p>
+                            <p><strong>Block:</strong> PATHARIGHAT • <strong>CHOs:</strong> 11</p>
+                            <button class="action-btn" onclick="scheduleIntervention('PRATAP RAJBONGSHI')">Schedule Intervention</button>
+                        </div>
+                    </div>
+
+                    <!-- Warning Alerts -->
+                    <div class="alert-card warning">
+                        <div class="alert-icon">⚠️</div>
+                        <div class="alert-content">
+                            <h3>Sipajhar Block - Performance Gap</h3>
+                            <p><strong>MUNINDRA SALOI (79.4%) vs BALODEV MEDHI (24.2%)</strong> - 55.2% disparity within same block</p>
+                            <p><strong>Action Required:</strong> Peer learning session between coordinators</p>
+                            <p><strong>Recommendation:</strong> MUNINDRA SALOI mentoring BALODEV MEDHI</p>
+                            <button class="action-btn" onclick="arrangeMentoring()">Arrange Mentoring</button>
+                        </div>
+                    </div>
+
+                    <!-- Success Story -->
+                    <div class="alert-card success">
+                        <div class="alert-icon">🏆</div>
+                        <div class="alert-content">
+                            <h3>KHARUPETIA Block - Success Model</h3>
+                            <p>Both coordinators performing excellently:</p>
+                            <p><strong>MOHIBUL ISLAM:</strong> 75.6% • <strong>ABU KHAYER IFTIKAR:</strong> 73.8%</p>
+                            <p><strong>Action:</strong> Document and share their supervision methods</p>
+                            <button class="action-btn" onclick="documentSuccess()">Document Success</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intervention Timeline -->
+                <div class="intervention-timeline">
+                    <h3>📅 Recommended Intervention Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item urgent">
+                            <div class="timeline-date">Within 24 Hours</div>
+                            <div class="timeline-content">
+                                <h4>Critical Intervention</h4>
+                                <p>PRATAP RAJBONGSHI supervision meeting</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item high">
+                            <div class="timeline-date">Within 3 Days</div>
+                            <div class="timeline-content">
+                                <h4>Support Enhancement</h4>
+                                <p>BALODEV MEDHI training and support</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item medium">
+                            <div class="timeline-date">Within 1 Week</div>
+                            <div class="timeline-content">
+                                <h4>Peer Learning</h4>
+                                <p>Coordinate mentoring between high and low performers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="copyright">
+                    Copyright by DigiFacility Team-DPH_CoE
+                </div>
+            </section>
+        </main>
+
+        <!-- Active Statistics Modal -->
+        <div id="activeStatsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📊 Active Statistics - 8 Coordinators Overview</h2>
+                    <span class="close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-filters">
+                        <select id="modalBlockFilter" onchange="filterModalStats()">
+                            <option value="all">All Blocks</option>
+                            <option value="KHARUPETIA">KHARUPETIA</option>
+                            <option value="PATHARIGHAT">PATHARIGHAT</option>
+                            <option value="Sipajhar">Sipajhar</option>
+                            <option value="JALJALI">JALJALI</option>
+                        </select>
+                    </div>
+                    
+                    <div class="stats-content">
+                        <div class="stats-column active-list">
+                            <h3>✅ Active CHOs (49)</h3>
+                            <div id="activeCHOsList">
+                                <div class="cho-item">Sample Active CHO 1</div>
+                                <div class="cho-item">Sample Active CHO 2</div>
+                            </div>
+                        </div>
+                        <div class="stats-column inactive-list">
+                            <h3>❌ Inactive CHOs (52)</h3>
+                            <div id="inactiveCHOsList">
+                                <div class="cho-item inactive">Sample Inactive CHO 1</div>
+                                <div class="cho-item inactive">Sample Inactive CHO 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
