@@ -1,0 +1,204 @@
+{
+  "metadata": {
+    "total_chos": 101,
+    "total_blocks": 4,
+    "total_facilities": 100,
+    "block_coordinators": 8,
+    "coordinators_per_block": 2,
+    "total_periods_analyzed": 4,
+    "date_range": "Beginning to Sep 4, 2025"
+  },
+  "coordinator_block_mapping": {
+    "KHARUPETIA": [
+      "MOHIBUL ISLAM",
+      "ABU KHAYER IFTIKAR"
+    ],
+    "PATHARIGHAT": [
+      "PRATAP RAJBONGSHI",
+      "NIRANJAN SAHARIAH"
+    ],
+    "Sipajhar": [
+      "BALODEV MEDHI",
+      "MUNINDRA SALOI"
+    ],
+    "JALJALI": [
+      "SAGARIKA PRITY BARUAH",
+      "PRIYANKA DAS"
+    ]
+  },
+  "map_colors": {
+    "KHARUPETIA": "#a7f3d0",
+    "JALJALI": "#fef3c7",
+    "Sipajhar": "#fed7aa",
+    "PATHARIGHAT": "#fecaca"
+  },
+  "performance_calculations": {
+    "activity_rate": "Activity Rate = (Active CHOs / Total CHOs) \u00d7 100. Active CHOs are those with 'Yes' status in the current period.",
+    "performance_ranking": "Performance Ranking = Weighted score based on Activity Rate (40%), OPD Registrations (30%), ABHA Registrations (20%), and Consistency across periods (10%).",
+    "infrastructure_readiness": "Infrastructure Readiness = Average of CHO availability, facility functionality, and coordinator supervision effectiveness scores."
+  },
+  "blocks": [
+    {
+      "Block_Name": "KHARUPETIA",
+      "Coordinator_1": "MOHIBUL ISLAM",
+      "Coordinator_2": "ABU KHAYER IFTIKAR",
+      "Total_Coordinators": 2,
+      "Total_CHOs": 34,
+      "Average_Activity_Rate_%": 75.0,
+      "Total_OPD_All_Periods": 841,
+      "Total_ABHA_All_Periods": 42,
+      "Performance_Level": "high",
+      "Week_3_Activity_Rate_%": 77.41968888969348,
+      "Week_3_Active_CHOs": 25,
+      "Week_3_Inactive_CHOs": 9,
+      "Week_3_Total_OPD": 210,
+      "Week_3_Total_ABHA": 8
+    },
+    {
+      "Block_Name": "PATHARIGHAT",
+      "Coordinator_1": "PRATAP RAJBONGSHI",
+      "Coordinator_2": "NIRANJAN SAHARIAH",
+      "Total_Coordinators": 2,
+      "Total_CHOs": 17,
+      "Average_Activity_Rate_%": 32.3,
+      "Total_OPD_All_Periods": 89,
+      "Total_ABHA_All_Periods": 4,
+      "Performance_Level": "critical",
+      "Week_3_Activity_Rate_%": 35.23697087937381,
+      "Week_3_Active_CHOs": 5,
+      "Week_3_Inactive_CHOs": 12,
+      "Week_3_Total_OPD": 22,
+      "Week_3_Total_ABHA": 0
+    },
+    {
+      "Block_Name": "Sipajhar",
+      "Coordinator_1": "BALODEV MEDHI",
+      "Coordinator_2": "MUNINDRA SALOI",
+      "Total_Coordinators": 2,
+      "Total_CHOs": 26,
+      "Average_Activity_Rate_%": 47.2,
+      "Total_OPD_All_Periods": 231,
+      "Total_ABHA_All_Periods": 11,
+      "Performance_Level": "low",
+      "Week_3_Activity_Rate_%": 47.808168973068014,
+      "Week_3_Active_CHOs": 12,
+      "Week_3_Inactive_CHOs": 14,
+      "Week_3_Total_OPD": 57,
+      "Week_3_Total_ABHA": 2
+    },
+    {
+      "Block_Name": "JALJALI",
+      "Coordinator_1": "SAGARIKA PRITY BARUAH",
+      "Coordinator_2": "PRIYANKA DAS",
+      "Total_Coordinators": 2,
+      "Total_CHOs": 23,
+      "Average_Activity_Rate_%": 53.1,
+      "Total_OPD_All_Periods": 395,
+      "Total_ABHA_All_Periods": 19,
+      "Performance_Level": "medium",
+      "Week_3_Activity_Rate_%": 58.09144440533479,
+      "Week_3_Active_CHOs": 12,
+      "Week_3_Inactive_CHOs": 11,
+      "Week_3_Total_OPD": 98,
+      "Week_3_Total_ABHA": 3
+    }
+  ],
+  "coordinators": [
+    {
+      "Block_Coordinator": "MOHIBUL ISLAM",
+      "Block_Name": "KHARUPETIA",
+      "Total_CHOs_Supervised": 20,
+      "Average_Activity_Rate_%": 75.6,
+      "Total_OPD_All_Periods": 556,
+      "Performance_Category": "excellent",
+      "Week_3_Active_CHOs": 15,
+      "Week_3_Inactive_CHOs": 5,
+      "Total_ABHA_All_Periods": 27,
+      "Intervention_Priority": "Low"
+    },
+    {
+      "Block_Coordinator": "ABU KHAYER IFTIKAR",
+      "Block_Name": "KHARUPETIA",
+      "Total_CHOs_Supervised": 14,
+      "Average_Activity_Rate_%": 73.8,
+      "Total_OPD_All_Periods": 285,
+      "Performance_Category": "excellent",
+      "Week_3_Active_CHOs": 10,
+      "Week_3_Inactive_CHOs": 4,
+      "Total_ABHA_All_Periods": 14,
+      "Intervention_Priority": "Low"
+    },
+    {
+      "Block_Coordinator": "PRATAP RAJBONGSHI",
+      "Block_Name": "PATHARIGHAT",
+      "Total_CHOs_Supervised": 11,
+      "Average_Activity_Rate_%": 17.9,
+      "Total_OPD_All_Periods": 27,
+      "Performance_Category": "critical",
+      "Week_3_Active_CHOs": 1,
+      "Week_3_Inactive_CHOs": 10,
+      "Total_ABHA_All_Periods": 1,
+      "Intervention_Priority": "Critical"
+    },
+    {
+      "Block_Coordinator": "NIRANJAN SAHARIAH",
+      "Block_Name": "PATHARIGHAT",
+      "Total_CHOs_Supervised": 6,
+      "Average_Activity_Rate_%": 59.7,
+      "Total_OPD_All_Periods": 62,
+      "Performance_Category": "good",
+      "Week_3_Active_CHOs": 3,
+      "Week_3_Inactive_CHOs": 3,
+      "Total_ABHA_All_Periods": 3,
+      "Intervention_Priority": "Medium"
+    },
+    {
+      "Block_Coordinator": "BALODEV MEDHI",
+      "Block_Name": "Sipajhar",
+      "Total_CHOs_Supervised": 15,
+      "Average_Activity_Rate_%": 24.2,
+      "Total_OPD_All_Periods": 49,
+      "Performance_Category": "needs_improvement",
+      "Week_3_Active_CHOs": 3,
+      "Week_3_Inactive_CHOs": 12,
+      "Total_ABHA_All_Periods": 2,
+      "Intervention_Priority": "Critical"
+    },
+    {
+      "Block_Coordinator": "MUNINDRA SALOI",
+      "Block_Name": "Sipajhar",
+      "Total_CHOs_Supervised": 11,
+      "Average_Activity_Rate_%": 79.4,
+      "Total_OPD_All_Periods": 182,
+      "Performance_Category": "excellent",
+      "Week_3_Active_CHOs": 8,
+      "Week_3_Inactive_CHOs": 3,
+      "Total_ABHA_All_Periods": 9,
+      "Intervention_Priority": "Low"
+    },
+    {
+      "Block_Coordinator": "SAGARIKA PRITY BARUAH",
+      "Block_Name": "JALJALI",
+      "Total_CHOs_Supervised": 13,
+      "Average_Activity_Rate_%": 34.2,
+      "Total_OPD_All_Periods": 176,
+      "Performance_Category": "needs_improvement",
+      "Week_3_Active_CHOs": 4,
+      "Week_3_Inactive_CHOs": 9,
+      "Total_ABHA_All_Periods": 8,
+      "Intervention_Priority": "High"
+    },
+    {
+      "Block_Coordinator": "PRIYANKA DAS",
+      "Block_Name": "JALJALI",
+      "Total_CHOs_Supervised": 10,
+      "Average_Activity_Rate_%": 76.6,
+      "Total_OPD_All_Periods": 219,
+      "Performance_Category": "excellent",
+      "Week_3_Active_CHOs": 7,
+      "Week_3_Inactive_CHOs": 3,
+      "Total_ABHA_All_Periods": 10,
+      "Intervention_Priority": "Low"
+    }
+  ]
+}
